@@ -29,6 +29,15 @@ import {
   augmentPreHandler,
 } from "./augment";
 
+// Global error handlers - set up early to catch initialization errors
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled rejection at:", promise, "reason:", reason);
+});
+
 const event = new EventEmitter()
 
 async function initializeClaudeConfig() {
@@ -144,14 +153,7 @@ async function run(options: RunOptions = {}) {
     logger: loggerConfig,
   });
 
-  // Add global error handlers to prevent the service from crashing
-  process.on("uncaughtException", (err) => {
-    server.logger.error("Uncaught exception:", err);
-  });
 
-  process.on("unhandledRejection", (reason, promise) => {
-    server.logger.error("Unhandled rejection at:", promise, "reason:", reason);
-  });
   // Add async preHandler hook for authentication
   server.addHook("preHandler", async (req, reply) => {
     return new Promise((resolve, reject) => {
