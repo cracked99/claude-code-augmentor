@@ -1,11 +1,19 @@
 {
-  "name": "@musistudio/claude-code-augment",
+  "name": "@repo-ninja/claude-code-augmentor",
   "version": "1.0.0",
   "description": "Claude Code Router with request augmentation - intercept, augment, and forward Claude Code requests",
   "bin": {
     "ccr": "dist/cli.js",
-    "claude-code-augment": "dist/cli.js"
+    "claude-code-augmentor": "dist/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cracked99/claude-code-augmentor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cracked99/claude-code-augmentor/issues"
+  },
+  "homepage": "https://github.com/cracked99/claude-code-augmentor#readme",
   "scripts": {
     "build": "node scripts/build.js",
     "test": "jest",
@@ -20,7 +28,7 @@
     "llm",
     "anthropic"
   ],
-  "author": "musistudio",
+  "author": "repo-ninja",
   "license": "MIT",
   "dependencies": {
     "@fastify/static": "^8.2.0",
@@ -69,6 +77,7 @@
     ]
   },
   "publishConfig": {
+    "access": "public",
     "ignore": [
       "!build/",
       "src/",
