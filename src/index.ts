@@ -22,6 +22,12 @@ import JSON5 from "json5";
 import { IAgent } from "./agents/type";
 import agentsManager from "./agents";
 import { EventEmitter } from "node:events";
+import {
+  AugmentConfig,
+  DEFAULT_AUGMENT_CONFIG,
+  mergeAugmentConfig,
+  augmentPreHandler,
+} from "./augment";
 
 const event = new EventEmitter()
 
@@ -157,6 +163,23 @@ async function run(options: RunOptions = {}) {
       apiKeyAuth(config)(req, reply, done).catch(reject);
     });
   });
+
+  // Add augmentation preHandler hook for Claude Code requests
+  const augmentConfig: AugmentConfig = mergeAugmentConfig(
+    DEFAULT_AUGMENT_CONFIG,
+    config.Augment || {}
+  );
+  
+  if (augmentConfig.enabled) {
+    server.logger.info("Claude Code Augment is enabled");
+    server.addHook("preHandler", async (req, reply) => {
+      const result = await augmentPreHandler(augmentConfig, server.logger)(req, reply);
+      if (result) {
+        return result;
+      }
+    });
+  }
+
   server.addHook("preHandler", async (req, reply) => {
     if (req.url.startsWith("/v1/messages") && !req.url.startsWith("/v1/messages/count_tokens")) {
       const useAgents = []

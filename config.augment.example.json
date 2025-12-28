@@ -1,0 +1,73 @@
+{
+  "LOG": true,
+  "LOG_LEVEL": "debug",
+  "HOST": "127.0.0.1",
+  "PORT": 3456,
+  "APIKEY": "",
+  "API_TIMEOUT_MS": "600000",
+
+  "Augment": {
+    "enabled": true,
+    "modified_system_prompt": "You are an enhanced AI coding assistant. You have access to additional context about the user's project and preferences. Always provide detailed, well-structured responses with code examples when relevant.",
+    "additional_instructions": [
+      "When writing code, always include error handling and input validation.",
+      "Prefer functional programming patterns when appropriate.",
+      "Include comments explaining complex logic.",
+      "Suggest tests for any code you write."
+    ],
+    "extra_context": {
+      "project": {
+        "name": "my-awesome-app",
+        "type": "web-application",
+        "framework": "next.js",
+        "language": "typescript"
+      },
+      "preferences": {
+        "testing_framework": "jest",
+        "styling": "tailwindcss",
+        "state_management": "zustand",
+        "code_style": "functional"
+      },
+      "conventions": {
+        "component_naming": "PascalCase",
+        "file_naming": "kebab-case",
+        "max_file_length": 300
+      }
+    },
+    "openrouter_endpoint": "https://openrouter.ai/api/v1/chat/completions",
+    "openrouter_auth": "$OPENROUTER_API_KEY",
+    "detection": {
+      "header_field": "x-agent",
+      "header_value": "claude-code",
+      "metadata_field": "agent",
+      "metadata_value": "claude-code"
+    }
+  },
+
+  "Providers": [
+    {
+      "name": "openrouter",
+      "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
+      "api_key": "$OPENROUTER_API_KEY",
+      "models": [
+        "google/gemini-2.5-pro-preview",
+        "anthropic/claude-sonnet-4",
+        "anthropic/claude-3.5-sonnet",
+        "openai/gpt-4o"
+      ],
+      "transformer": {
+        "use": ["openrouter"]
+      }
+    }
+  ],
+
+  "Router": {
+    "default": "openrouter,google/gemini-2.5-pro-preview",
+    "background": "openrouter,google/gemini-2.5-pro-preview",
+    "think": "openrouter,google/gemini-2.5-pro-preview",
+    "longContext": "openrouter,google/gemini-2.5-pro-preview",
+    "longContextThreshold": 60000,
+    "webSearch": "openrouter,google/gemini-2.5-pro-preview",
+    "image": ""
+  }
+}

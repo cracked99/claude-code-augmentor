@@ -24,6 +24,7 @@
 - **CLI Model Management**: Manage models and providers directly from the terminal with `ccr model`.
 - **GitHub Actions Integration**: Trigger Claude Code tasks in your GitHub workflows.
 - **Plugin System**: Extend functionality with custom transformers.
+- **Request Augmentation**: Intercept Claude Code requests and augment them with custom system prompts, instructions, and context before forwarding to OpenRouter.
 
 ## 🚀 Getting Started
 
@@ -460,6 +461,66 @@ For routing within subagents, you must specify a particular provider and model b
 <CCR-SUBAGENT-MODEL>openrouter,anthropic/claude-3.5-sonnet</CCR-SUBAGENT-MODEL>
 Please help me analyze this code snippet for potential optimizations...
 ```
+
+## 🔧 Request Augmentation
+
+Claude Code Router includes a powerful request augmentation feature that allows you to intercept Claude Code requests, modify system prompts, add custom instructions, and inject contextual data before forwarding to OpenRouter.
+
+### Quick Setup
+
+Add the `Augment` section to your `config.json`:
+
+```json
+{
+  "Augment": {
+    "enabled": true,
+    "modified_system_prompt": "You are an enhanced AI coding assistant with expertise in TypeScript and React.",
+    "additional_instructions": [
+      "Always include comprehensive error handling.",
+      "Prefer functional programming patterns.",
+      "Write tests for new functionality."
+    ],
+    "extra_context": {
+      "project": {
+        "name": "my-web-app",
+        "framework": "next.js",
+        "language": "typescript"
+      }
+    },
+    "openrouter_endpoint": "https://openrouter.ai/api/v1/chat/completions",
+    "openrouter_auth": "$OPENROUTER_API_KEY",
+    "detection": {
+      "header_field": "x-agent",
+      "header_value": "claude-code"
+    }
+  }
+}
+```
+
+### Key Features
+
+- **System Prompt Modification**: Replace the default Claude Code system prompt with your customized version
+- **Additional Instructions**: Insert ordered instruction messages after the system prompt
+- **Extra Context**: Attach structured JSON context (wrapped in `<context>` tags)
+- **Request Detection**: Identify Claude Code requests via HTTP headers or request metadata
+- **Message Preservation**: Original user/assistant messages are never modified
+
+### Request Detection
+
+The augmentation activates when a request matches **either**:
+
+1. **Header Detection**: `X-Agent: claude-code`
+2. **Metadata Detection**: Request body contains `{"metadata": {"agent": "claude-code"}}`
+
+### Error Handling
+
+| Code | Condition | Description |
+|------|-----------|-------------|
+| 400 | Missing/invalid params | Invalid augmentation configuration |
+| 502 | Network error | Failed to reach OpenRouter |
+| 4xx/5xx | OpenRouter error | Propagated from upstream |
+
+For complete documentation, see [docs/AUGMENT.md](docs/AUGMENT.md).
 
 ## Status Line (Beta)
 To better monitor the status of claude-code-router at runtime, version v1.0.40 includes a built-in statusline tool, which you can enable in the UI.
