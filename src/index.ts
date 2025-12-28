@@ -173,9 +173,14 @@ async function run(options: RunOptions = {}) {
   );
   
   if (augmentConfig.enabled) {
-    server.logger.info("Claude Code Augment is enabled");
+    const logger = server.log || server.logger || console;
+    if (logger.info) {
+      logger.info("Claude Code Augment is enabled");
+    } else {
+      console.log("Claude Code Augment is enabled");
+    }
     server.addHook("preHandler", async (req, reply) => {
-      const result = await augmentPreHandler(augmentConfig, server.logger)(req, reply);
+      const result = await augmentPreHandler(augmentConfig, logger)(req, reply);
       if (result) {
         return result;
       }
