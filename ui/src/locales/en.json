@@ -233,5 +233,29 @@
     "worker_init_failed": "Failed to initialize worker",
     "grouping_not_supported": "Log grouping not supported by server",
     "back": "Back"
+  },
+  "augment": {
+    "title": "Request Augmentation",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "openrouter_settings": "OpenRouter Settings",
+    "openrouter_endpoint": "API Endpoint",
+    "openrouter_auth": "API Key / Auth Token",
+    "auth_hint": "Use $ENV_VAR syntax to reference environment variables",
+    "detection_settings": "Detection Settings",
+    "header_field": "Header Field",
+    "header_value": "Header Value",
+    "metadata_field": "Metadata Field",
+    "metadata_value": "Metadata Value",
+    "system_prompt": "Modified System Prompt",
+    "system_prompt_placeholder": "Enter a custom system prompt to replace or augment the default...",
+    "system_prompt_hint": "This prompt will replace the original system prompt when augmentation is active",
+    "additional_instructions": "Additional Instructions",
+    "instruction_placeholder": "Enter an instruction and press Enter",
+    "extra_context": "Extra Context",
+    "context_key": "Key",
+    "context_value": "Value (JSON or string)",
+    "context_hint": "Context is wrapped in <context> tags and included in the request. Use JSON for objects.",
+    "add": "Add"
   }
 }

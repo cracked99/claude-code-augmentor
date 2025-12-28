@@ -233,5 +233,29 @@
     "worker_init_failed": "Worker初始化失败",
     "grouping_not_supported": "服务器不支持日志分组",
     "back": "返回"
+  },
+  "augment": {
+    "title": "请求增强",
+    "enabled": "已启用",
+    "disabled": "已禁用",
+    "openrouter_settings": "OpenRouter 设置",
+    "openrouter_endpoint": "API 端点",
+    "openrouter_auth": "API 密钥 / 认证令牌",
+    "auth_hint": "使用 $ENV_VAR 语法引用环境变量",
+    "detection_settings": "检测设置",
+    "header_field": "请求头字段",
+    "header_value": "请求头值",
+    "metadata_field": "元数据字段",
+    "metadata_value": "元数据值",
+    "system_prompt": "修改后的系统提示词",
+    "system_prompt_placeholder": "输入自定义系统提示词以替换或增强默认提示词...",
+    "system_prompt_hint": "当增强功能激活时，此提示词将替换原始系统提示词",
+    "additional_instructions": "附加指令",
+    "instruction_placeholder": "输入指令后按回车添加",
+    "extra_context": "额外上下文",
+    "context_key": "键",
+    "context_value": "值 (JSON 或字符串)",
+    "context_hint": "上下文会被包裹在 <context> 标签中并包含在请求中。对象请使用 JSON 格式。",
+    "add": "添加"
   }
 }

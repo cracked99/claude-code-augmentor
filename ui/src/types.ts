@@ -49,11 +49,29 @@ export interface StatusLineConfig {
   fontFamily?: string;
 }
 
+export interface AugmentDetectionConfig {
+  header_field?: string;
+  header_value?: string;
+  metadata_field?: string;
+  metadata_value?: string;
+}
+
+export interface AugmentConfig {
+  enabled: boolean;
+  modified_system_prompt?: string;
+  additional_instructions?: string[];
+  extra_context?: Record<string, unknown>;
+  openrouter_endpoint: string;
+  openrouter_auth: string;
+  detection: AugmentDetectionConfig;
+}
+
 export interface Config {
   Providers: Provider[];
   Router: RouterConfig;
   transformers: Transformer[];
   StatusLine?: StatusLineConfig;
+  Augment?: AugmentConfig;
   forceUseImageAgent?: boolean;
   // Top-level settings
   LOG: boolean;
