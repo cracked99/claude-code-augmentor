@@ -1,6 +1,6 @@
 {
   "name": "@ai-sensei/claude-code-augmentor",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Claude Code Router with request augmentation - intercept, augment, and forward Claude Code requests",
   "bin": {
     "ccr": "dist/cli.js",

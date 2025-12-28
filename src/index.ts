@@ -174,15 +174,17 @@ async function run(options: RunOptions = {}) {
   
   if (augmentConfig.enabled) {
     const logger = server.log || server.logger || console;
-    if (logger.info) {
-      logger.info("Claude Code Augment is enabled");
-    } else {
-      console.log("Claude Code Augment is enabled");
-    }
+    console.log("Claude Code Augment is enabled");
+    
     server.addHook("preHandler", async (req, reply) => {
-      const result = await augmentPreHandler(augmentConfig, logger)(req, reply);
-      if (result) {
-        return result;
+      try {
+        const result = await augmentPreHandler(augmentConfig, logger)(req, reply);
+        if (result) {
+          return result;
+        }
+      } catch (err) {
+        console.error("Error in augment preHandler:", err);
+        // Don't crash the server, just skip augmentation
       }
     });
   }
@@ -407,7 +409,12 @@ async function run(options: RunOptions = {}) {
   })
 
 
-  server.start();
+  try {
+    await server.start();
+  } catch (err) {
+    console.error("Failed to start server:", err);
+    process.exit(1);
+  }
 }
 
 export { run };

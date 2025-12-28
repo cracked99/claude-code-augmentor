@@ -66,7 +66,7 @@ async function main() {
   const isRunning = await isServiceRunning()
   switch (command) {
     case "start":
-      run();
+      await run();
       break;
     case "stop":
       try {
